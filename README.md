@@ -11,7 +11,7 @@ Project Alpha demonstrates a well-structured Python package with multiple compon
 - **Data processing** and **modeling** stubs  
 - **Automated tests** with pytest  
 - **Documentation** in reStructuredText  
-- **Continuous Integration** via GitHub Actions  
+- **Continuous Integration** (CI) via GitHub Actions  
 - **Docker** setup for containerized execution
 
 ## Features
