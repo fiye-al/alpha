@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # ensure conda “activate” will work
+        shell: bash -l {0}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          # pick the Python version you need
+          python-version: "3.9"
+          auto-update-conda: true
+
+      - name: Create & activate conda environment
+        run: |
+          # create a fresh env named 'ci-env' (avoid touching base)
+          conda env create --file environment.yml --name ci-env
+          conda activate ci-env
+
+      - name: Install any extra dependencies
+        run: |
+          # e.g. if you have additional tooling
+          pip install flake8 pytest
+
+      - name: Run tests
+        run: |
+          pytest --maxfail=1 --disable-warnings -q
